@@ -1,0 +1,287 @@
+:host {
+  display: block;
+}
+
+.skip {
+  position: absolute;
+  left: -999px;
+}
+
+.top,
+main,
+.colophon {
+  width: min(1180px, calc(100% - 2rem));
+  margin-inline: auto;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 0 0.4rem;
+}
+
+.brand {
+  display: grid;
+}
+
+.mark {
+  font-family: Fraunces, serif;
+  font-size: 1.6rem;
+  letter-spacing: 0.28em;
+}
+
+.brand small,
+.promise,
+.kicker,
+.timing,
+.colophon {
+  color: var(--muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.68rem;
+}
+
+.bag {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  padding: 0.55rem 0.8rem;
+  display: flex;
+  gap: 0.55rem;
+  align-items: center;
+  cursor: pointer;
+}
+
+.bag b {
+  color: var(--sand);
+}
+
+.hero {
+  padding: 2.4rem 0 1.4rem;
+}
+
+h1 {
+  max-width: 16ch;
+  margin: 0.45rem 0 0.9rem;
+  font-family: Fraunces, serif;
+  font-size: clamp(2.4rem, 6vw, 4.6rem);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.lede {
+  max-width: 46rem;
+  margin: 0 0 1.6rem;
+  color: #d8d0c6;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(212, 180, 140, 0.35);
+  background: rgba(22, 20, 18, 0.88);
+  backdrop-filter: blur(12px);
+}
+
+.spark {
+  color: var(--sand);
+}
+
+.search input {
+  flex: 1;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font: 500 1.05rem/1.4 Manrope, sans-serif;
+  outline: none;
+}
+
+.pulse {
+  color: var(--dusk);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.chips,
+.examples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0;
+  margin: 0.9rem 0 0;
+  list-style: none;
+}
+
+.chips li,
+.examples button,
+.mode,
+.fail-card button,
+.drawer button {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+}
+
+.chips li {
+  padding: 0.35rem 0.6rem;
+  color: var(--sand);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.examples button {
+  padding: 0.45rem 0.7rem;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.82rem;
+}
+
+.examples button:hover {
+  color: var(--ink);
+  border-color: var(--sand);
+}
+
+.insight {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 1.2rem;
+  padding: 1.4rem 0 1.6rem;
+  align-items: end;
+}
+
+.insight h2 {
+  margin: 0.35rem 0 0;
+  font-family: Fraunces, serif;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 400;
+}
+
+.fix {
+  color: var(--dusk);
+}
+
+.fix s {
+  color: var(--danger);
+}
+
+.stats {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.mode {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0.9rem;
+  cursor: pointer;
+}
+
+.mode.on {
+  border-color: var(--sand);
+  background: rgba(212, 180, 140, 0.08);
+}
+
+.fail-card {
+  margin-bottom: 1.4rem;
+  padding: 1.2rem 1.3rem;
+  border: 1px solid rgba(197, 107, 92, 0.45);
+  background: rgba(197, 107, 92, 0.08);
+}
+
+.fail-card h3,
+.fail-card p {
+  margin: 0 0 0.6rem;
+}
+
+.fail-card button,
+.drawer-panel header button {
+  padding: 0.65rem 0.8rem;
+  cursor: pointer;
+}
+
+.drawer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: rgba(12, 11, 10, 0);
+  transition: background 0.25s ease;
+}
+
+.drawer.open {
+  pointer-events: auto;
+  background: rgba(12, 11, 10, 0.45);
+}
+
+.drawer-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(380px, 100%);
+  height: 100%;
+  padding: 1.2rem;
+  background: #141210;
+  border-left: 1px solid var(--line);
+  transform: translateX(110%);
+  transition: transform 0.28s ease;
+}
+
+.drawer.open .drawer-panel {
+  transform: none;
+}
+
+.drawer-panel header,
+.drawer-panel footer,
+.drawer-panel li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.drawer-panel ul {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.drawer-panel li {
+  margin-bottom: 0.8rem;
+}
+
+.drawer-panel img {
+  width: 52px;
+  height: 68px;
+  object-fit: cover;
+}
+
+.empty-bag {
+  color: var(--muted);
+}
+
+.colophon {
+  display: grid;
+  gap: 0.3rem;
+  padding: 3rem 0 2.4rem;
+}
+
+.colophon p {
+  margin: 0;
+}
+
+@media (max-width: 800px) {
+  .promise {
+    display: none;
+  }
+  .insight {
+    grid-template-columns: 1fr;
+  }
+}

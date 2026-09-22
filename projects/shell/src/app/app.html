@@ -1,0 +1,127 @@
+<a class="skip" href="#buscar">Saltar al buscador</a>
+
+<header class="top">
+  <div class="brand">
+    <span class="mark">MARE</span>
+    <small>Headless · Native Federation</small>
+  </div>
+  <p class="promise">No busques palabras. Describe el instante.</p>
+  <button class="bag" type="button" (click)="cart.toggle()">
+    Look
+    <b>{{ cart.count() }}</b>
+  </button>
+</header>
+
+<main>
+  <section class="hero">
+    <p class="kicker">Búsqueda vectorial · 32 dimensiones</p>
+    <h1>El buscador tradicional se rinde si escribes mal. El estilista no.</h1>
+    <p class="lede">
+      Prueba <em>ropa para ir a la playa de noche</em>. Ninguna prenda contiene esa frase. El motor entiende playa + anochecer + ropa ligera y el micro-frontend pinta el componente exacto de cada pieza.
+    </p>
+
+    <label class="search" id="buscar">
+      <span class="spark" aria-hidden="true">✦</span>
+      <input
+        [ngModel]="draft()"
+        (ngModelChange)="onDraft($event)"
+        [placeholder]="placeholder()"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      @if (search.loading()) {
+        <span class="pulse">leyendo contexto</span>
+      }
+    </label>
+
+    @if (visibleChips().length) {
+      <ul class="chips">
+        @for (chip of visibleChips(); track chip) {
+          <li>{{ chip }}</li>
+        }
+      </ul>
+    }
+
+    <div class="examples">
+      @for (example of examples; track example) {
+        <button type="button" (click)="useExample(example)">{{ example }}</button>
+      }
+    </div>
+  </section>
+
+  @if (search.result(); as result) {
+    <section class="insight">
+      <div>
+        <p class="kicker">{{ result.intent.id === 'open' ? 'Contexto abierto' : 'Intención' }}</p>
+        <h2>{{ result.intent.summary }}</h2>
+        @if (result.corrected) {
+          <p class="fix">
+            Escribiste con ruido. Entendí
+            @for (change of result.corrected.changes; track change.from) {
+              <span><s>{{ change.from }}</s> → {{ change.to }}</span>
+            }
+          </p>
+        }
+      </div>
+
+      <div class="stats">
+        <button type="button" class="mode" [class.on]="search.mode() === 'semantic'" (click)="setMode('semantic')">
+          Semántica
+          <strong>{{ result.counts.semantic }}</strong>
+        </button>
+        <button type="button" class="mode" [class.on]="search.mode() === 'keyword'" (click)="setMode('keyword')">
+          Palabra exacta
+          <strong>{{ result.counts.keyword }}</strong>
+        </button>
+        <p class="timing">{{ result.metrics.totalMs }} ms · {{ result.metrics.dims }}d · {{ result.metrics.engine }}</p>
+      </div>
+    </section>
+
+    @if (search.mode() === 'keyword' && result.counts.keyword === 0 && result.counts.semantic > 0) {
+      <aside class="fail-card">
+        <h3>El buscador tradicional devolvió cero.</h3>
+        <p>
+          No hay coincidencia literal de {{ result.intent.tokens.join(', ') || 'esos términos' }}.
+          Cambia a semántica para ver las {{ result.counts.semantic }} piezas que sí encajan con el momento.
+        </p>
+        <button type="button" (click)="setMode('semantic')">Ver lo que entendió la IA</button>
+      </aside>
+    }
+  }
+
+  <shell-remote-catalog [hits]="search.result()?.hits ?? []" [loading]="search.loading()" />
+</main>
+
+<aside class="drawer" [class.open]="cart.open()" aria-hidden="{{ !cart.open() }}">
+  <div class="drawer-panel">
+    <header>
+      <h2>Look</h2>
+      <button type="button" (click)="cart.close()">Cerrar</button>
+    </header>
+    @if (!cart.count()) {
+      <p class="empty-bag">Todavía no hay piezas. Elige desde el catálogo federado.</p>
+    } @else {
+      <ul>
+        @for (item of cart.lines(); track item.id) {
+          <li>
+            <img [src]="item.image" [alt]="item.name" width="64" height="80" />
+            <div>
+              <strong>{{ item.name }}</strong>
+              <span>{{ item.price | currency: 'USD':'symbol-narrow':'1.0-0' }}</span>
+            </div>
+            <button type="button" (click)="cart.remove(item.id)">Quitar</button>
+          </li>
+        }
+      </ul>
+      <footer>
+        <span>Total</span>
+        <b>{{ cart.total() | currency: 'USD':'symbol-narrow':'1.0-0' }}</b>
+      </footer>
+    }
+  </div>
+</aside>
+
+<footer class="colophon">
+  <p>Shell Angular 21 · Catalog MFE Native Federation · API vectorial Node</p>
+  <p>El host no conoce las tarjetas. El remote decide el componente según <code>product.kind</code>.</p>
+</footer>

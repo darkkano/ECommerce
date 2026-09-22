@@ -1,0 +1,47 @@
+{
+  "name": "mare",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "concurrently -k -n api,mfe,shell -c cyan,magenta,green \"npm run api\" \"npm run catalog\" \"npm run shell\"",
+    "api": "node api/src/server.js",
+    "db:setup": "node api/src/setup-db.js",
+    "db:seed": "node api/src/setup-db.js",
+    "db:push": "drizzle-kit push",
+    "catalog": "ng serve catalog --port 4201",
+    "shell": "wait-on http://localhost:3001/api/health http://localhost:4201/remoteEntry.json && ng serve shell --port 4200",
+    "build": "ng build catalog && ng build shell",
+    "watch": "ng build --watch --configuration development"
+  },
+  "private": true,
+  "packageManager": "npm@11.14.1",
+  "dependencies": {
+    "@angular-architects/native-federation": "^21.2.6",
+    "@angular/animations": "^21.2.0",
+    "@angular/common": "^21.2.0",
+    "@angular/compiler": "^21.2.0",
+    "@angular/core": "^21.2.0",
+    "@angular/forms": "^21.2.0",
+    "@angular/platform-browser": "^21.2.0",
+    "@angular/router": "^21.2.0",
+    "@softarc/native-federation-node": "^3.3.4",
+    "concurrently": "^10.0.5",
+    "cors": "^2.8.6",
+    "drizzle-orm": "^0.44.5",
+    "es-module-shims": "^1.5.12",
+    "express": "^5.2.1",
+    "mysql2": "^3.24.4",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "wait-on": "^9.1.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^21.2.24",
+    "@angular/build": "^21.2.24",
+    "@angular/cli": "^21.2.11",
+    "@angular/compiler-cli": "^21.2.0",
+    "drizzle-kit": "^0.31.4",
+    "prettier": "^3.8.1",
+    "typescript": "~5.9.2"
+  }
+}
